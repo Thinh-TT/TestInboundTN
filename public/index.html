@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeamNexus Inbound Demo App | GitHub Webhook Testing</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Header -->
+    <header class="navbar">
+      <div class="brand">
+        <div class="logo-badge">TN</div>
+        <span class="brand-name">TeamNexus Demo Hub</span>
+        <span class="phase-tag">Giai đoạn 15: GitHub Webhooks</span>
+      </div>
+      <div class="server-status">
+        <span class="status-dot"></span>
+        <span id="api-status">Server: Checking...</span>
+      </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="content-wrapper">
+      <section class="hero-card">
+        <h1>Dự Án Web Mẫu Demo Tích Hợp GitHub ➔ TeamNexus</h1>
+        <p class="subtitle">
+          Repository này được thiết kế để test luồng <strong>Inbound Webhook tự động hoá khép kín</strong> giữa GitHub Repository và bảng Kanban của TeamNexus.
+        </p>
+        <div class="quick-stats">
+          <div class="stat-box">
+            <span class="stat-number" id="stat-issues">0</span>
+            <span class="stat-label">Issues đồng bộ</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number" id="stat-prs">0</span>
+            <span class="stat-label">Pull Requests</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">TN-1..N</span>
+            <span class="stat-label">Định dạng mã thẻ</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testing Scenarios Guide -->
+      <section class="guide-grid">
+        <div class="card scenario-card">
+          <div class="card-header">
+            <span class="badge badge-purple">Kịch bản 1</span>
+            <h3>GitHub Issue ➔ Task Kanban</h3>
+          </div>
+          <p>Mở Issue mới trên GitHub Repo. TeamNexus tự động tạo thẻ task mới trong bảng Kanban được chỉ định bằng tài khoản <code>GitHub Bot</code> và kích hoạt Jev AI Triage.</p>
+          <div class="code-snippet">
+            <code>Title: [Bug] Lỗi giao diện trang chủ mobile</code>
+          </div>
+        </div>
+
+        <div class="card scenario-card">
+          <div class="card-header">
+            <span class="badge badge-blue">Kịch bản 2</span>
+            <h3>Tên nhánh & Commit liên kết</h3>
+          </div>
+          <p>Tạo nhánh hoặc viết commit chứa mã thẻ (ví dụ <code>TN-1</code>). TeamNexus sẽ nhận diện và hiển thị link liên kết tới commit đó.</p>
+          <div class="code-snippet">
+            <code>git checkout -b feat/TN-1-landing-ui</code><br>
+            <code>git commit -m "feat(ui): [TN-1] add hero banner"</code>
+          </div>
+        </div>
+
+        <div class="card scenario-card">
+          <div class="card-header">
+            <span class="badge badge-amber">Kịch bản 3</span>
+            <h3>Tạo PR ➔ Chuyển "In Review"</h3>
+          </div>
+          <p>Tạo Pull Request với tiêu đề hoặc nội dung chứa mã task (ví dụ <code>TN-1</code>). Thẻ task trên bảng Kanban tự động chuyển sang cột <strong>In Review</strong>.</p>
+          <div class="code-snippet">
+            <code>PR Title: feat: TN-1 redesign web header</code>
+          </div>
+        </div>
+
+        <div class="card scenario-card">
+          <div class="card-header">
+            <span class="badge badge-green">Kịch bản 4</span>
+            <h3>Merge PR ➔ Tự Động "Done"</h3>
+          </div>
+          <p>Khi PR được merge vào nhánh chính (main), Task tương ứng tự động chuyển sang cột <strong>Done</strong> và ghi vết <code>AiActionLog</code> có thể hoàn tác.</p>
+          <div class="code-snippet">
+            <code>Merge pull request #1 from feat/TN-1-landing-ui</code>
+          </div>
+        </div>
+
+        <div class="card scenario-card">
+          <div class="card-header">
+            <span class="badge badge-teal">Kịch bản 5</span>
+            <h3>Đồng bộ Bình luận hai chiều</h3>
+          </div>
+          <p>Thêm comment thảo luận trên GitHub Issue hoặc PR. TeamNexus sẽ tự động tạo comment tương ứng trong thẻ task với nhãn <code>via GitHub @username</code>.</p>
+          <div class="code-snippet">
+            <code>Comment: "Đã sửa xong phần CSS responsive, chờ review."</code>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Playground -->
+      <section class="card playground-card">
+        <h2>🛠️ Công Cụ Hỗ Trợ Test Nhanh (Local Simulator)</h2>
+        <p>Tạo mẫu commit message hoặc tiêu đề PR theo chuẩn TeamNexus Task Code:</p>
+        <div class="form-row">
+          <input type="text" id="task-code-input" value="TN-1" placeholder="Mã task (ví dụ: TN-1, TN-42)">
+          <select id="action-type-select">
+            <option value="commit">Commit Message</option>
+            <option value="branch">Branch Name</option>
+            <option value="pr">PR Title</option>
+            <option value="issue">Issue Title</option>
+          </select>
+          <button id="btn-generate" class="btn btn-primary">Tạo chuỗi mẫu</button>
+        </div>
+        <div class="result-box" id="result-box">
+          <span id="generated-string">feat: [TN-1] implement demo feature</span>
+          <button id="btn-copy" class="btn btn-secondary">Sao chép</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>TeamNexus Inbound Integration Demo • .NET 10 + React 19 + PostgreSQL 18 pgvector</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "test-inbound-tn",
+  "version": "1.0.0",
+  "description": "Demo Web Application for testing TeamNexus GitHub Inbound Webhook Integration (Phase 15)",
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs"
+  },
+  "keywords": [
+    "teamnexus",
+    "inbound-webhook",
+    "github-integration",
+    "kanban-sync"
+  ],
+  "author": "TeamNexus Demo",
+  "license": "MIT"
+}
