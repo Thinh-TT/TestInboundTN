@@ -135,3 +135,4 @@ git push -u origin feature/TN-1-responsive-fix
 1. Thêm một bình luận vào Issue hoặc PR trên GitHub:
    - *"Đã kiểm thử trên mobile, chạy rất mượt!"*
 2. **Kết quả kỳ vọng:** Bình luận xuất hiện gần như ngay lập tức trong phần Thảo luận của thẻ task trên TeamNexus kèm nhãn `via GitHub @<username>`.
+
