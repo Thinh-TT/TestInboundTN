@@ -1,4 +1,4 @@
-SCRUM-2SCRUM-2SCRUM-2
+SCRUM-2SCRUM-2SCRUM-2TN-5TN-5TN-5
 
 
 <!-- PR for TN-27 pool optimization -->
